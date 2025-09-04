@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoaStore - Invierte en Ti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            animation: bounce 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+        
+        .whatsapp-modal {
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+            width: 350px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 101;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .whatsapp-modal.show {
+            transform: scale(1);
+        }
+        
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        
+        .chat-message.bot {
+            background: #f0f0f0;
+            margin-right: auto;
+        }
+        
+        .chat-message.user {
+            background: #25d366;
+            color: white;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header Limpio y Organizado -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-2 rounded-lg">
+                        <i class="fas fa-globe text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold gradient-text">DoaStore</h1>
+                        <p class="text-xs text-gray-500">Invierte en Ti</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#inicio" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Inicio</a>
+                    <a href="#servicios" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Servicios</a>
+                    <a href="#calculadora" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Calculadora</a>
+                    <a href="#como-funciona" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">¿Cómo Funciona?</a>
+                    <a href="#pedido" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Hacer Pedido</a>
+                    <a href="#contacto" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Contacto</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <!-- CTA Button -->
+                    <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold hover:from-purple-700 hover:to-pink-700 transition-all text-sm">
+                        ¡Comprar Ahora!
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 text-xl p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-bars" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 shadow-lg transform -translate-y-full opacity-0 transition-all duration-300 ease-in-out">
+            <div class="container mx-auto px-4 py-4">
+                <nav class="space-y-3">
+                    <a href="#inicio" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        Inicio
+                    </a>
+                    <a href="#servicios" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        Servicios
+                    </a>
+                    <a href="#calculadora" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        Calculadora
+                    </a>
+                    <a href="#como-funciona" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        ¿Cómo Funciona?
+                    </a>
+                    <a href="#pedido" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        Hacer Pedido
+                    </a>
+                    <a href="#contacto" onclick="closeMobileMenu()" class="block text-gray-700 hover:text-purple-600 transition-colors p-2 rounded-lg hover:bg-purple-50 font-medium">
+                        Contacto
+                    </a>
+                </nav>
+                
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'}); closeMobileMenu();" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 rounded-full font-bold hover:from-purple-700 hover:to-pink-700 transition-all">
+                        ¡Comprar Ahora!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section con Carrusel -->
+    <section id="inicio" class="relative overflow-hidden">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Slide 1 -->
+                <div class="carousel-slide bg-gradient-to-r from-blue-600 to-purple-600 h-[500px] md:h-[600px] flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="text-white">
+                                <h2 class="text-4xl md:text-6xl font-bold mb-4">¡Compra en el Mundo!</h2>
+                                <p class="text-xl mb-6">SHEIN, TEMU, Amazon y más. Nosotros nos encargamos de todo.</p>
+                                <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'})" class="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-300 transition-colors pulse-animation">
+                                    ¡Empezar Ahora!
+                                </button>
+                            </div>
+                            <div class="text-center floating-animation">
+                                <div class="text-6xl md:text-8xl">🛍️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="carousel-slide bg-gradient-to-r from-green-500 to-teal-600 h-[500px] md:h-[600px] flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="text-white">
+                                <h2 class="text-4xl md:text-6xl font-bold mb-4">Precios Increíbles</h2>
+                                <p class="text-xl mb-6">Los mejores precios del mercado con envío seguro garantizado.</p>
+                                <div class="flex space-x-4">
+                                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                        <div class="text-2xl font-bold">-50%</div>
+                                        <div class="text-sm">vs. Otros</div>
+                                    </div>
+                                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                                        <div class="text-2xl font-bold">7-15</div>
+                                        <div class="text-sm">Días</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center floating-animation">
+                                <div class="text-6xl md:text-8xl">💰</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="carousel-slide bg-gradient-to-r from-pink-500 to-rose-600 h-[500px] md:h-[600px] flex items-center">
+                    <div class="container mx-auto px-4">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="text-white">
+                                <h2 class="text-4xl md:text-6xl font-bold mb-4">100% Confiable</h2>
+                                <p class="text-xl mb-6">Miles de clientes satisfechos. Tu pedido está en las mejores manos.</p>
+                                <div class="flex items-center space-x-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-white font-bold">4.9/5 (2,847 reseñas)</span>
+                                </div>
+                            </div>
+                            <div class="text-center floating-animation">
+                                <div class="text-6xl md:text-8xl">⭐</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controles del carrusel -->
+        <button onclick="previousSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-30 transition-all">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 text-white p-3 rounded-full hover:bg-opacity-30 transition-all">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Indicadores -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <button onclick="goToSlide(0)" class="carousel-indicator w-3 h-3 bg-white bg-opacity-50 rounded-full transition-all" data-slide="0"></button>
+            <button onclick="goToSlide(1)" class="carousel-indicator w-3 h-3 bg-white bg-opacity-50 rounded-full transition-all" data-slide="1"></button>
+            <button onclick="goToSlide(2)" class="carousel-indicator w-3 h-3 bg-white bg-opacity-50 rounded-full transition-all" data-slide="2"></button>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Nuestros Servicios</h2>
+                <p class="text-gray-600 text-lg">Compramos en las mejores tiendas internacionales por ti</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-hover bg-gradient-to-br from-red-50 to-pink-50 p-8 rounded-2xl border border-red-100">
+                    <div class="text-center">
+                        <div class="bg-red-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shopping-bag text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">SHEIN</h3>
+                        <p class="text-gray-600 mb-4">Moda, accesorios y más con los mejores precios del mercado.</p>
+                        <div class="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold">Desde $5 USD</div>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-yellow-50 to-orange-50 p-8 rounded-2xl border border-yellow-100">
+                    <div class="text-center">
+                        <div class="bg-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-gift text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">TEMU</h3>
+                        <p class="text-gray-600 mb-4">Electrónicos, hogar, herramientas y productos únicos.</p>
+                        <div class="bg-yellow-500 text-white px-4 py-2 rounded-full text-sm font-bold">Desde $3 USD</div>
+                    </div>
+                </div>
+                
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-100">
+                    <div class="text-center">
+                        <div class="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-amazon text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Amazon</h3>
+                        <p class="text-gray-600 mb-4">Todo lo que necesitas con la calidad y variedad de Amazon.</p>
+                        <div class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold">Desde $10 USD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora de Costos -->
+    <section id="calculadora" class="py-16 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold gradient-text mb-4">💰 Calculadora de Costos</h2>
+                    <p class="text-gray-600 text-lg">Estima el costo total de tu pedido al instante</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Tienda</label>
+                            <select id="tienda" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" onchange="actualizarTienda()">
+                                <option value="">Selecciona la tienda</option>
+                                <option value="shein">SHEIN</option>
+                                <option value="temu">TEMU</option>
+                                <option value="amazon">Amazon</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Valor del Producto (USD)</label>
+                            <input type="number" id="valorProducto" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="0.00" step="0.01" oninput="calcularConversion()">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2" id="labelConversion">Costo Convertido a $TTD</label>
+                            <input type="text" id="costoConvertido" class="w-full p-4 border border-gray-300 rounded-xl bg-gray-50" placeholder="$0 TTD" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">País de Destino</label>
+                            <select id="paisDestino" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" onchange="actualizarPais()">
+                                <option value="">Selecciona tu país</option>
+                                <option value="trinidad">Trinidad y Tobago</option>
+                                <option value="brazil">Brasil</option>
+                                <option value="usa">Estados Unidos</option>
+                                <option value="colombia">Colombia</option>
+                                <option value="venezuela">Venezuela</option>
+                                <option value="ecuador">Ecuador</option>
+                                <option value="peru">Perú</option>
+                                <option value="espana">España</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Editor de Tasas para Trinidad -->
+                    <div id="editorTasas" class="hidden mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                        <h4 class="text-lg font-bold text-blue-800 mb-3">📊 Editor de Tasas USD a TTD</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                            <div>
+                                <label class="text-sm font-medium text-blue-700">$1 USD =</label>
+                                <input type="number" id="tasa1" class="w-full p-2 border rounded" value="15" onchange="actualizarTasas()">
+                                <span class="text-xs text-blue-600">TTD</span>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-blue-700">$2 USD =</label>
+                                <input type="number" id="tasa2" class="w-full p-2 border rounded" value="27" onchange="actualizarTasas()">
+                                <span class="text-xs text-blue-600">TTD</span>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-blue-700">$3 USD =</label>
+                                <input type="number" id="tasa3" class="w-full p-2 border rounded" value="45" onchange="actualizarTasas()">
+                                <span class="text-xs text-blue-600">TTD</span>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-blue-700">$4 USD =</label>
+                                <input type="number" id="tasa4" class="w-full p-2 border rounded" value="50" onchange="actualizarTasas()">
+                                <span class="text-xs text-blue-600">TTD</span>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-blue-700">$5 USD =</label>
+                                <input type="number" id="tasa5" class="w-full p-2 border rounded" value="62" onchange="actualizarTasas()">
+                                <span class="text-xs text-blue-600">TTD</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <button onclick="expandirTasas()" id="btnExpandir" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                                Agregar más tasas (hasta $50)
+                            </button>
+                        </div>
+                        <div id="tasasExtendidas" class="hidden mt-4 grid grid-cols-2 md:grid-cols-5 gap-3"></div>
+                    </div>
+                    
+                    <button onclick="calcularCosto()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all mb-6">
+                        💰 Calcular Costo Total
+                    </button>
+                    
+                    <div id="resultadoCalculo" class="hidden bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-200">
+                        <h3 class="text-2xl font-bold text-green-800 mb-4 text-center">💸 Estimación de Costos</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-xl">
+                                <div class="text-gray-600">Producto</div>
+                                <div id="costoProducto" class="text-2xl font-bold text-gray-800">$0.00</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl">
+                                <div class="text-gray-600">Envío Internacional</div>
+                                <div id="costoEnvio" class="text-2xl font-bold text-gray-800">$0.00</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl">
+                                <div class="text-gray-600">Servicio (15%)</div>
+                                <div id="costoServicio" class="text-2xl font-bold text-gray-800">$0.00</div>
+                            </div>
+                            <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-xl">
+                                <div class="text-green-100">Total Estimado</div>
+                                <div id="costoTotal" class="text-3xl font-bold">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <p class="text-gray-600 text-sm">*Precio estimado. El costo final puede variar según el producto específico.</p>
+                            <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'})" class="mt-4 bg-green-600 text-white px-6 py-2 rounded-full font-bold hover:bg-green-700 transition-all">
+                                ¡Hacer Pedido Ahora! 🚀
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona -->
+    <section id="como-funciona" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">¿Cómo Funciona?</h2>
+                <p class="text-gray-600 text-lg">Solo 4 pasos para recibir tus productos favoritos</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">1</div>
+                    <h3 class="text-xl font-bold mb-2">Envía el Link</h3>
+                    <p class="text-gray-600">Copia y pega el enlace del producto que quieres en nuestro formulario</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-blue-500 to-teal-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">2</div>
+                    <h3 class="text-xl font-bold mb-2">Cotización</h3>
+                    <p class="text-gray-600">Te enviamos el precio total incluyendo producto, envío y nuestro servicio</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">3</div>
+                    <h3 class="text-xl font-bold mb-2">Pago y Compra</h3>
+                    <p class="text-gray-600">Realizas el pago y nosotros compramos inmediatamente tu producto</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-orange-500 to-red-500 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">4</div>
+                    <h3 class="text-xl font-bold mb-2">Recibe</h3>
+                    <p class="text-gray-600">En 7-15 días recibes tu pedido directamente en tu puerta</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Pedido -->
+    <section id="pedido" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold gradient-text mb-4">Hacer Mi Pedido</h2>
+                    <p class="text-gray-600 text-lg">Completa el formulario y te contactaremos en minutos</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-3xl shadow-xl">
+                    <form id="pedidoForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">Nombre Completo *</label>
+                                <input type="text" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Tu nombre completo">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">Teléfono/WhatsApp *</label>
+                                <input type="tel" required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="+1 234 567 8900">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Email</label>
+                            <input type="email" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="tu@email.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Links de Productos *</label>
+                            <textarea required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all h-32" placeholder="Pega aquí los enlaces de los productos que quieres comprar:&#10;&#10;Ejemplo:&#10;https://shein.com/producto1 - Cantidad: 2&#10;https://temu.com/producto2 - Cantidad: 1&#10;https://amazon.com/producto3 - Cantidad: 3"></textarea>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">País de Entrega *</label>
+                                <select required class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                                    <option value="">Selecciona tu país</option>
+                                    <option value="trinidad">Trinidad y Tobago</option>
+                                    <option value="venezuela">Venezuela</option>
+                                    <option value="brazil">Brasil</option>
+                                    <option value="mexico">México</option>
+                                    <option value="colombia">Colombia</option>
+                                    <option value="argentina">Argentina</option>
+                                    <option value="chile">Chile</option>
+                                    <option value="peru">Perú</option>
+                                    <option value="ecuador">Ecuador</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">Método de Pago Preferido</label>
+                                <select class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                                    <option value="">Selecciona método</option>
+                                    <option value="transferencia">Transferencia Bancaria</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="western">Western Union</option>
+                                    <option value="crypto">Criptomonedas</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Comentarios Adicionales</label>
+                            <textarea class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all h-24" placeholder="¿Alguna instrucción especial? ¿Preguntas sobre tallas, colores, etc.?"></textarea>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-4 rounded-full font-bold text-lg hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105 pulse-animation">
+                                🚀 Enviar Mi Pedido
+                            </button>
+                            <p class="text-gray-500 text-sm mt-4">Te contactaremos en menos de 30 minutos</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Lo Que Dicen Nuestros Clientes</h2>
+                <p class="text-gray-600 text-lg">Miles de personas confían en nosotros</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Increíble servicio! Pedí 5 vestidos de SHEIN y llegaron perfectos en 10 días. Los precios son súper justos."</p>
+                    <div class="flex items-center">
+                        <div class="bg-pink-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">M</div>
+                        <div>
+                            <div class="font-bold">María González</div>
+                            <div class="text-gray-500 text-sm">México</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Compré electrónicos de TEMU y Amazon. Todo llegó en perfecto estado y me ahorraron mucho dinero."</p>
+                    <div class="flex items-center">
+                        <div class="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">C</div>
+                        <div>
+                            <div class="font-bold">Carlos Rodríguez</div>
+                            <div class="text-gray-500 text-sm">Colombia</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Súper confiables! Ya es mi tercera compra con ellos. Siempre responden rápido y cumplen con los tiempos."</p>
+                    <div class="flex items-center">
+                        <div class="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold mr-4">A</div>
+                        <div>
+                            <div class="font-bold">Ana Martínez</div>
+                            <div class="text-gray-500 text-sm">Argentina</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="bg-white p-2 rounded-full">
+                            <i class="fas fa-globe text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">DoaStore</h3>
+                    </div>
+                    <p class="text-gray-200">Tu socio confiable para compras internacionales. Hacemos que comprar en el extranjero sea fácil y seguro.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Contacto</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+1 (868) 737-1965</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@doastore.com</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 Disponible</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Servicios</h4>
+                    <ul class="space-y-2">
+                        <li>Compras en SHEIN</li>
+                        <li>Compras en TEMU</li>
+                        <li>Compras en Amazon</li>
+                        <li>Envío Internacional</li>
+                        <li>Asesoría Personalizada</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-4">Síguenos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white border-opacity-20 mt-8 pt-8 text-center">
+                <p>&copy; 2024 DoaStore. LEONOVA STUDIO. Hecho con ❤️ para emprendedores.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <div class="whatsapp-float" onclick="toggleWhatsAppModal()">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <!-- Modal de WhatsApp -->
+    <div id="whatsappModal" class="whatsapp-modal">
+        <div class="bg-green-600 text-white p-4 rounded-t-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold">DoaStore</div>
+                        <div class="text-xs text-green-100">En línea</div>
+                    </div>
+                </div>
+                <button onclick="toggleWhatsAppModal()" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="p-4 max-h-80 overflow-y-auto" id="chatMessages">
+            <div class="chat-message bot">
+                ¡Hola! 👋 Soy tu asistente de GlobalShop. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+        
+        <div class="p-4 border-t">
+            <div class="grid grid-cols-1 gap-2">
+                <button onclick="selectOption('cotizacion')" class="bg-blue-100 text-blue-800 p-3 rounded-lg text-sm hover:bg-blue-200 transition-all">
+                    💰 Solicitar Cotización
+                </button>
+                <button onclick="selectOption('seguimiento')" class="bg-green-100 text-green-800 p-3 rounded-lg text-sm hover:bg-green-200 transition-all">
+                    📦 Seguimiento de Pedido
+                </button>
+                <button onclick="selectOption('info')" class="bg-purple-100 text-purple-800 p-3 rounded-lg text-sm hover:bg-purple-200 transition-all">
+                    ❓ Información General
+                </button>
+                <button onclick="selectOption('registro')" class="bg-yellow-100 text-yellow-800 p-3 rounded-lg text-sm hover:bg-yellow-200 transition-all">
+                    📝 Registro Rápido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentSlide = 0;
+        let whatsappModalOpen = false;
+        let chatStep = 0;
+        let userData = {};
+        let mobileMenuOpen = false;
+
+        // Funciones del menú móvil
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileMenu.style.transform = 'translateY(0)';
+                mobileMenu.style.opacity = '1';
+                menuIcon.className = 'fas fa-times';
+            } else {
+                mobileMenu.style.transform = 'translateY(-100%)';
+                mobileMenu.style.opacity = '0';
+                menuIcon.className = 'fas fa-bars';
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            mobileMenuOpen = false;
+            mobileMenu.style.transform = 'translateY(-100%)';
+            mobileMenu.style.opacity = '0';
+            menuIcon.className = 'fas fa-bars';
+        }
+
+        // Carrusel
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const track = document.getElementById('carouselTrack');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlide) {
+                    indicator.classList.add('bg-white');
+                    indicator.classList.remove('bg-opacity-50');
+                } else {
+                    indicator.classList.remove('bg-white');
+                    indicator.classList.add('bg-opacity-50');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateCarousel();
+        }
+
+        // Auto-play del carrusel
+        setInterval(nextSlide, 5000);
+        updateCarousel();
+
+        // Configuración de monedas y tasas de cambio por tienda
+        let configuracionTiendas = {
+            'shein': {
+                nombre: 'SHEIN',
+                tasas: {
+                    1: 15, 2: 27, 3: 45, 4: 50, 5: 62, 6: 75, 7: 87, 8: 100, 9: 112, 10: 125,
+                    11: 137, 12: 150, 13: 162, 14: 175, 15: 187, 16: 200, 17: 212, 18: 225, 19: 237, 20: 250,
+                    21: 262, 22: 275, 23: 287, 24: 300, 25: 312, 26: 325, 27: 337, 28: 350, 29: 362, 30: 375,
+                    31: 387, 32: 400, 33: 412, 34: 425, 35: 437, 36: 450, 37: 462, 38: 475, 39: 487, 40: 500,
+                    41: 512, 42: 525, 43: 537, 44: 550, 45: 562, 46: 575, 47: 587, 48: 600, 49: 612, 50: 625
+                }
+            },
+            'temu': {
+                nombre: 'TEMU',
+                tasas: {
+                    1: 13, 2: 25, 3: 38, 4: 48, 5: 60, 6: 72, 7: 84, 8: 96, 9: 108, 10: 120,
+                    11: 132, 12: 144, 13: 156, 14: 168, 15: 180, 16: 192, 17: 204, 18: 216, 19: 228, 20: 240,
+                    21: 252, 22: 264, 23: 276, 24: 288, 25: 300, 26: 312, 27: 324, 28: 336, 29: 348, 30: 360,
+                    31: 372, 32: 384, 33: 396, 34: 408, 35: 420, 36: 432, 37: 444, 38: 456, 39: 468, 40: 480,
+                    41: 492, 42: 504, 43: 516, 44: 528, 45: 540, 46: 552, 47: 564, 48: 576, 49: 588, 50: 600
+                }
+            },
+            'amazon': {
+                nombre: 'Amazon',
+                tasas: {
+                    1: 18, 2: 32, 3: 48, 4: 58, 5: 70, 6: 82, 7: 94, 8: 106, 9: 118, 10: 130,
+                    11: 142, 12: 154, 13: 166, 14: 178, 15: 190, 16: 202, 17: 214, 18: 226, 19: 238, 20: 250,
+                    21: 262, 22: 274, 23: 286, 24: 298, 25: 310, 26: 322, 27: 334, 28: 346, 29: 358, 30: 370,
+                    31: 382, 32: 394, 33: 406, 34: 418, 35: 430, 36: 442, 37: 454, 38: 466, 39: 478, 40: 490,
+                    41: 502, 42: 514, 43: 526, 44: 538, 45: 550, 46: 562, 47: 574, 48: 586, 49: 598, 50: 610
+                }
+            }
+        };
+
+        let configuracionPaises = {
+            'trinidad': {
+                moneda: 'TTD',
+                simbolo: '$TT',
+                envio: 25
+            },
+            'brazil': {
+                moneda: 'BRL',
+                simbolo: 'R$',
+                tasaCambio: { base: 5.2 },
+                envio: 22
+            },
+            'usa': {
+                moneda: 'USD',
+                simbolo: '$',
+                tasaCambio: { base: 1 },
+                envio: 8
+            },
+            'colombia': {
+                moneda: 'COP',
+                simbolo: '$CO',
+                tasaCambio: { base: 4200 },
+                envio: 15
+            },
+            'venezuela': {
+                moneda: 'VES',
+                simbolo: 'Bs.',
+                tasaCambio: { base: 36.5 },
+                envio: 18
+            },
+            'ecuador': {
+                moneda: 'USD',
+                simbolo: '$',
+                tasaCambio: { base: 1 },
+                envio: 13
+            },
+            'peru': {
+                moneda: 'PEN',
+                simbolo: 'S/.',
+                tasaCambio: { base: 3.7 },
+                envio: 14
+            },
+            'espana': {
+                moneda: 'EUR',
+                simbolo: '€',
+                tasaCambio: { base: 0.92 },
+                envio: 20
+            }
+        };
+
+        function actualizarPais() {
+            const pais = document.getElementById('paisDestino').value;
+            const tienda = document.getElementById('tienda').value;
+            const labelConversion = document.getElementById('labelConversion');
+            const editorTasas = document.getElementById('editorTasas');
+            
+            if (pais === 'trinidad' && tienda) {
+                labelConversion.textContent = 'Costo Convertido a $TTD';
+                mostrarEditorTasas(tienda);
+            } else if (pais && configuracionPaises[pais]) {
+                const config = configuracionPaises[pais];
+                labelConversion.textContent = `Costo Convertido a ${config.simbolo} (${config.moneda})`;
+                editorTasas.classList.add('hidden');
+            } else {
+                labelConversion.textContent = 'Costo Convertido';
+                editorTasas.classList.add('hidden');
+            }
+            
+            calcularConversion();
+        }
+
+        function actualizarTienda() {
+            const tienda = document.getElementById('tienda').value;
+            const pais = document.getElementById('paisDestino').value;
+            
+            if (pais === 'trinidad' && tienda) {
+                mostrarEditorTasas(tienda);
+            }
+            
+            calcularConversion();
+        }
+
+        function mostrarEditorTasas(tienda) {
+            const editorTasas = document.getElementById('editorTasas');
+            const configTienda = configuracionTiendas[tienda];
+            
+            if (!configTienda) return;
+            
+            // Actualizar título del editor
+            const titulo = editorTasas.querySelector('h4');
+            titulo.textContent = `📊 Editor de Tasas ${configTienda.nombre} - USD a TTD`;
+            
+            // Crear grid completo de $1 a $50
+            let html = '';
+            for (let i = 1; i <= 50; i++) {
+                const valor = configTienda.tasas[i] || (i * 12.5); // Valor por defecto si no existe
+                html += `
+                    <div class="text-center">
+                        <label class="text-xs font-medium text-blue-700 block">$${i}</label>
+                        <input type="number" id="tasa_${tienda}_${i}" class="w-full p-1 border rounded text-sm text-center" value="${valor}" onchange="actualizarTasasTienda('${tienda}')">
+                        <span class="text-xs text-blue-600">TTD</span>
+                    </div>
+                `;
+            }
+            
+            // Reemplazar el contenido del grid
+            const gridContainer = editorTasas.querySelector('.grid');
+            gridContainer.innerHTML = html;
+            gridContainer.className = 'grid grid-cols-5 md:grid-cols-10 gap-2 max-h-60 overflow-y-auto';
+            
+            // Ocultar botón de expandir ya que mostramos todo
+            const btnExpandir = document.getElementById('btnExpandir');
+            btnExpandir.style.display = 'none';
+            
+            editorTasas.classList.remove('hidden');
+        }
+
+        function actualizarTasasTienda(tienda) {
+            // Actualizar las tasas en la configuración
+            for (let i = 1; i <= 50; i++) {
+                const input = document.getElementById(`tasa_${tienda}_${i}`);
+                if (input && input.value) {
+                    configuracionTiendas[tienda].tasas[i] = parseFloat(input.value);
+                }
+            }
+            calcularConversion();
+        }
+
+        function calcularConversion() {
+            const valorUSD = parseFloat(document.getElementById('valorProducto').value) || 0;
+            const pais = document.getElementById('paisDestino').value;
+            const tienda = document.getElementById('tienda').value;
+            const costoConvertido = document.getElementById('costoConvertido');
+            
+            if (!valorUSD || !pais) {
+                costoConvertido.value = '';
+                return;
+            }
+            
+            // Verificar si excede $50 USD para Trinidad
+            if (pais === 'trinidad' && valorUSD > 50) {
+                costoConvertido.value = 'Monto excede $50 USD - Contactar por WhatsApp';
+                costoConvertido.style.color = '#dc2626';
+                costoConvertido.style.fontWeight = 'bold';
+                return;
+            } else {
+                costoConvertido.style.color = '';
+                costoConvertido.style.fontWeight = '';
+            }
+            
+            const config = configuracionPaises[pais];
+            if (!config) return;
+            
+            let valorConvertido = 0;
+            
+            if (pais === 'trinidad' && tienda && configuracionTiendas[tienda]) {
+                // Usar tabla de tasas específica de la tienda para Trinidad
+                const configTienda = configuracionTiendas[tienda];
+                const valorEntero = Math.floor(valorUSD);
+                
+                if (configTienda.tasas[valorEntero]) {
+                    valorConvertido = configTienda.tasas[valorEntero];
+                    // Si hay decimales, calcular proporcionalmente
+                    const decimal = valorUSD - valorEntero;
+                    if (decimal > 0 && configTienda.tasas[valorEntero + 1]) {
+                        const diferencia = configTienda.tasas[valorEntero + 1] - configTienda.tasas[valorEntero];
+                        valorConvertido += diferencia * decimal;
+                    }
+                } else {
+                    // Si no está en la tabla, usar tasa promedio
+                    valorConvertido = valorUSD * 12.5;
+                }
+            } else {
+                // Para otros países usar tasa base
+                valorConvertido = valorUSD * config.tasaCambio.base;
+            }
+            
+            const formatearNumero = (num) => {
+                return pais === 'colombia' || pais === 'venezuela' 
+                    ? Math.round(num).toLocaleString() 
+                    : num.toFixed(2);
+            };
+            
+            costoConvertido.value = `${config.simbolo}${formatearNumero(valorConvertido)}`;
+        }
+
+
+
+        function convertirMonedaLocal(valorUSD, pais) {
+            const config = configuracionPaises[pais];
+            if (!config) return valorUSD;
+            
+            if (pais === 'trinidad') {
+                // Buscar la tasa más cercana en la tabla de Trinidad
+                const valorEntero = Math.floor(valorUSD);
+                if (config.tasaCambio[valorEntero]) {
+                    return config.tasaCambio[valorEntero];
+                }
+                // Si no está en la tabla, calcular proporcionalmente
+                const tasaBase = 12.5; // Tasa promedio
+                return valorUSD * tasaBase;
+            } else {
+                // Para otros países usar tasa base
+                return valorUSD * config.tasaCambio.base;
+            }
+        }
+
+        function convertirDesdeMonedaLocal(valorLocal, pais) {
+            const config = configuracionPaises[pais];
+            if (!config) return valorLocal;
+            
+            if (pais === 'trinidad') {
+                // Buscar el valor USD más cercano
+                for (let usd in config.tasaCambio) {
+                    if (config.tasaCambio[usd] >= valorLocal) {
+                        return parseInt(usd);
+                    }
+                }
+                // Si es mayor que el máximo, calcular proporcionalmente
+                return valorLocal / 12.5;
+            } else {
+                return valorLocal / config.tasaCambio.base;
+            }
+        }
+
+        // Calculadora de Costos
+        function calcularCosto() {
+            const tienda = document.getElementById('tienda').value;
+            const valorInput = parseFloat(document.getElementById('valorProducto').value) || 0;
+            const pais = document.getElementById('paisDestino').value;
+
+            if (!tienda || !valorInput || !pais) {
+                alert('Por favor completa todos los campos obligatorios');
+                return;
+            }
+
+            // Si excede $50 USD para Trinidad, redirigir a WhatsApp
+            if (pais === 'trinidad' && valorInput > 50) {
+                const mensaje = `¡Hola! 👋 Vengo de la calculadora web.\n\n🛍️ Tienda: ${tienda.toUpperCase()}\n💰 Valor del producto: $${valorInput} USD\n🇹🇹 País: Trinidad y Tobago\n\nEl monto excede los $50 USD. ¿Me pueden ayudar con una cotización personalizada?`;
+                window.open(`https://wa.me/15551234567?text=${encodeURIComponent(mensaje)}`, '_blank');
+                return;
+            }
+
+            const config = configuracionPaises[pais];
+            let valorProductoUSD = valorInput;
+            let costoEnvio = config ? config.envio : 15;
+
+            // Cálculo de costos en USD
+            const costoServicio = valorProductoUSD * 0.15;
+            const costoTotalUSD = valorProductoUSD + costoEnvio + costoServicio;
+
+            // Convertir a moneda local para mostrar
+            let simboloMoneda = '$';
+            let valorProductoLocal = valorProductoUSD;
+            let costoEnvioLocal = costoEnvio;
+            let costoServicioLocal = costoServicio;
+            let costoTotalLocal = costoTotalUSD;
+
+            if (pais === 'trinidad' && tienda && configuracionTiendas[tienda]) {
+                simboloMoneda = config.simbolo;
+                const configTienda = configuracionTiendas[tienda];
+                
+                // Usar tasas específicas de la tienda para Trinidad
+                valorProductoLocal = configTienda.tasas[Math.floor(valorProductoUSD)] || (valorProductoUSD * 12.5);
+                costoEnvioLocal = costoEnvio * 12.5; // Tasa promedio para envío
+                costoServicioLocal = costoServicio * 12.5; // Tasa promedio para servicio
+                costoTotalLocal = valorProductoLocal + costoEnvioLocal + costoServicioLocal;
+            } else if (config && pais !== 'ecuador' && pais !== 'usa') {
+                simboloMoneda = config.simbolo;
+                valorProductoLocal = valorProductoUSD * config.tasaCambio.base;
+                costoEnvioLocal = costoEnvio * config.tasaCambio.base;
+                costoServicioLocal = costoServicio * config.tasaCambio.base;
+                costoTotalLocal = costoTotalUSD * config.tasaCambio.base;
+            }
+
+            // Mostrar resultados
+            const formatearNumero = (num) => {
+                return pais === 'colombia' || pais === 'venezuela' 
+                    ? Math.round(num).toLocaleString() 
+                    : num.toFixed(2);
+            };
+
+            document.getElementById('costoProducto').textContent = `${simboloMoneda}${formatearNumero(valorProductoLocal)}`;
+            document.getElementById('costoEnvio').textContent = `${simboloMoneda}${formatearNumero(costoEnvioLocal)}`;
+            document.getElementById('costoServicio').textContent = `${simboloMoneda}${formatearNumero(costoServicioLocal)}`;
+            document.getElementById('costoTotal').textContent = `${simboloMoneda}${formatearNumero(costoTotalLocal)}`;
+            
+            document.getElementById('resultadoCalculo').classList.remove('hidden');
+            document.getElementById('resultadoCalculo').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // WhatsApp Modal
+        function toggleWhatsAppModal() {
+            const modal = document.getElementById('whatsappModal');
+            whatsappModalOpen = !whatsappModalOpen;
+            
+            if (whatsappModalOpen) {
+                modal.classList.add('show');
+            } else {
+                modal.classList.remove('show');
+                resetChat();
+            }
+        }
+
+        function addMessage(message, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function selectOption(option) {
+            chatStep = 1;
+            
+            switch(option) {
+                case 'cotizacion':
+                    addMessage('💰 Quiero una cotización', true);
+                    setTimeout(() => {
+                        addMessage('¡Perfecto! Para darte una cotización exacta, necesito que me envíes el link del producto. ¿Tienes el enlace listo?');
+                        showCotizacionOptions();
+                    }, 1000);
+                    break;
+                    
+                case 'seguimiento':
+                    addMessage('📦 Quiero hacer seguimiento de mi pedido', true);
+                    setTimeout(() => {
+                        addMessage('Claro, te ayudo con el seguimiento. ¿Tienes tu número de pedido o el nombre con el que hiciste la compra?');
+                        showSeguimientoOptions();
+                    }, 1000);
+                    break;
+                    
+                case 'info':
+                    addMessage('❓ Necesito información general', true);
+                    setTimeout(() => {
+                        addMessage('¡Por supuesto! ¿Qué te gustaría saber? Puedo ayudarte con tiempos de entrega, métodos de pago, países donde enviamos, etc.');
+                        showInfoOptions();
+                    }, 1000);
+                    break;
+                    
+                case 'registro':
+                    addMessage('📝 Quiero registrarme', true);
+                    setTimeout(() => {
+                        addMessage('¡Excelente! Te voy a hacer unas preguntas rápidas para registrarte. ¿Cuál es tu nombre completo?');
+                        startRegistration();
+                    }, 1000);
+                    break;
+            }
+        }
+
+        function showCotizacionOptions() {
+            const chatMessages = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'mt-3 space-y-2';
+            optionsDiv.innerHTML = `
+                <button onclick="handleCotizacion('tengo-link')" class="w-full bg-green-100 text-green-800 p-2 rounded text-sm hover:bg-green-200">
+                    ✅ Sí, tengo el link
+                </button>
+                <button onclick="handleCotizacion('no-tengo-link')" class="w-full bg-blue-100 text-blue-800 p-2 rounded text-sm hover:bg-blue-200">
+                    🔍 No, necesito ayuda para encontrarlo
+                </button>
+            `;
+            chatMessages.appendChild(optionsDiv);
+        }
+
+        function showSeguimientoOptions() {
+            const chatMessages = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'mt-3 space-y-2';
+            optionsDiv.innerHTML = `
+                <button onclick="handleSeguimiento('tengo-numero')" class="w-full bg-green-100 text-green-800 p-2 rounded text-sm hover:bg-green-200">
+                    ✅ Tengo mi número de pedido
+                </button>
+                <button onclick="handleSeguimiento('no-tengo-numero')" class="w-full bg-blue-100 text-blue-800 p-2 rounded text-sm hover:bg-blue-200">
+                    📱 No tengo el número, pero tengo mi nombre
+                </button>
+            `;
+            chatMessages.appendChild(optionsDiv);
+        }
+
+        function showInfoOptions() {
+            const chatMessages = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'mt-3 space-y-2';
+            optionsDiv.innerHTML = `
+                <button onclick="handleInfo('tiempos')" class="w-full bg-purple-100 text-purple-800 p-2 rounded text-sm hover:bg-purple-200">
+                    ⏰ Tiempos de entrega
+                </button>
+                <button onclick="handleInfo('pagos')" class="w-full bg-blue-100 text-blue-800 p-2 rounded text-sm hover:bg-blue-200">
+                    💳 Métodos de pago
+                </button>
+                <button onclick="handleInfo('paises')" class="w-full bg-green-100 text-green-800 p-2 rounded text-sm hover:bg-green-200">
+                    🌍 Países de envío
+                </button>
+            `;
+            chatMessages.appendChild(optionsDiv);
+        }
+
+        function handleCotizacion(action) {
+            if (action === 'tengo-link') {
+                addMessage('✅ Sí, tengo el link', true);
+                setTimeout(() => {
+                    addMessage('¡Perfecto! Te voy a redirigir a WhatsApp para que me envíes el link y te dé una cotización exacta en minutos. 🚀');
+                    setTimeout(() => {
+                        const mensaje = '¡Hola! 👋 Vengo de la página web y quiero una cotización. Tengo el link del producto listo para enviarte.';
+                        window.open(`https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`, '_blank');
+                        toggleWhatsAppModal();
+                    }, 2000);
+                }, 1000);
+            } else {
+                addMessage('🔍 No, necesito ayuda para encontrarlo', true);
+                setTimeout(() => {
+                    addMessage('No hay problema! Te ayudo a encontrar el producto. Dime qué estás buscando y en qué tienda (SHEIN, TEMU, Amazon) y te ayudo a localizarlo.');
+                    setTimeout(() => {
+                        const mensaje = '¡Hola! 👋 Vengo de la página web. Necesito ayuda para encontrar un producto y obtener una cotización.';
+                        window.open(`https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`, '_blank');
+                        toggleWhatsAppModal();
+                    }, 2000);
+                }, 1000);
+            }
+        }
+
+        function handleSeguimiento(action) {
+            if (action === 'tengo-numero') {
+                addMessage('✅ Tengo mi número de pedido', true);
+                setTimeout(() => {
+                    addMessage('¡Excelente! Te conectaré con WhatsApp para que me envíes tu número de pedido y te dé el estado actualizado. 📦');
+                    setTimeout(() => {
+                        const mensaje = '¡Hola! 👋 Vengo de la página web para hacer seguimiento de mi pedido. Tengo mi número de pedido listo.';
+                        window.open(`https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`, '_blank');
+                        toggleWhatsAppModal();
+                    }, 2000);
+                }, 1000);
+            } else {
+                addMessage('📱 No tengo el número, pero tengo mi nombre', true);
+                setTimeout(() => {
+                    addMessage('Sin problema! Con tu nombre y teléfono puedo ubicar tu pedido. Te conectaré con WhatsApp para ayudarte. 🔍');
+                    setTimeout(() => {
+                        const mensaje = '¡Hola! 👋 Vengo de la página web para seguimiento. No tengo mi número de pedido pero puedo dar mis datos personales.';
+                        window.open(`https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`, '_blank');
+                        toggleWhatsAppModal();
+                    }, 2000);
+                }, 1000);
+            }
+        }
+
+        function handleInfo(tipo) {
+            switch(tipo) {
+                case 'tiempos':
+                    addMessage('⏰ Tiempos de entrega', true);
+                    setTimeout(() => {
+                        addMessage('Los tiempos de entrega son:\n\n📦 SHEIN: 7-12 días\n📦 TEMU: 8-15 días\n📦 Amazon: 10-15 días\n\n¿Necesitas más información específica?');
+                        showFinalOptions();
+                    }, 1000);
+                    break;
+                case 'pagos':
+                    addMessage('💳 Métodos de pago', true);
+                    setTimeout(() => {
+                        addMessage('Aceptamos:\n\n💳 Transferencia bancaria\n💳 PayPal\n💳 Western Union\n💳 Criptomonedas\n💳 Efectivo (algunos países)\n\n¿Te gustaría hacer un pedido?');
+                        showFinalOptions();
+                    }, 1000);
+                    break;
+                case 'paises':
+                    addMessage('🌍 Países de envío', true);
+                    setTimeout(() => {
+                        addMessage('Enviamos a:\n\n🇲🇽 México\n🇨🇴 Colombia\n🇦🇷 Argentina\n🇨🇱 Chile\n🇵🇪 Perú\n🇪🇨 Ecuador\n\nY más países. ¿El tuyo está en la lista?');
+                        showFinalOptions();
+                    }, 1000);
+                    break;
+            }
+        }
+
+        function startRegistration() {
+            chatStep = 'registro-nombre';
+            const chatMessages = document.getElementById('chatMessages');
+            const inputDiv = document.createElement('div');
+            inputDiv.className = 'mt-3';
+            inputDiv.innerHTML = `
+                <input type="text" id="registroNombre" placeholder="Escribe tu nombre completo..." class="w-full p-2 border rounded text-sm">
+                <button onclick="handleRegistroStep()" class="w-full mt-2 bg-green-600 text-white p-2 rounded text-sm hover:bg-green-700">
+                    Continuar ➡️
+                </button>
+            `;
+            chatMessages.appendChild(inputDiv);
+        }
+
+        function handleRegistroStep() {
+            const input = document.getElementById('registroNombre');
+            if (!input.value.trim()) {
+                alert('Por favor ingresa tu nombre');
+                return;
+            }
+            
+            userData.nombre = input.value.trim();
+            addMessage(userData.nombre, true);
+            
+            setTimeout(() => {
+                addMessage(`¡Hola ${userData.nombre}! 👋 Ahora necesito tu número de WhatsApp para contactarte.`);
+                
+                const chatMessages = document.getElementById('chatMessages');
+                const inputDiv = document.createElement('div');
+                inputDiv.className = 'mt-3';
+                inputDiv.innerHTML = `
+                    <input type="tel" id="registroTelefono" placeholder="+1 868 737 1965" class="w-full p-2 border rounded text-sm">
+                    <button onclick="finalizarRegistro()" class="w-full mt-2 bg-green-600 text-white p-2 rounded text-sm hover:bg-green-700">
+                        Finalizar Registro ✅
+                    </button>
+                `;
+                chatMessages.appendChild(inputDiv);
+            }, 1000);
+        }
+
+        function finalizarRegistro() {
+            const telefono = document.getElementById('registroTelefono');
+            if (!telefono.value.trim()) {
+                alert('Por favor ingresa tu teléfono');
+                return;
+            }
+            
+            userData.telefono = telefono.value.trim();
+            addMessage(userData.telefono, true);
+            
+            setTimeout(() => {
+                addMessage(`¡Perfecto ${userData.nombre}! ✅ Tu registro está completo. Te contactaremos al ${userData.telefono} para cualquier novedad.`);
+                
+                setTimeout(() => {
+                    const mensaje = `¡Hola! 👋 Soy ${userData.nombre} y me acabo de registrar desde la página web.\n\n📱 Mi teléfono: ${userData.telefono}\n\n¡Listo para hacer mi primer pedido! 🛍️`;
+                    window.open(`https://wa.me/15551234567?text=${encodeURIComponent(mensaje)}`, '_blank');
+                    toggleWhatsAppModal();
+                }, 2000);
+            }, 1000);
+        }
+
+        function showFinalOptions() {
+            const chatMessages = document.getElementById('chatMessages');
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'mt-3 space-y-2';
+            optionsDiv.innerHTML = `
+                <button onclick="goToWhatsApp('pedido')" class="w-full bg-green-100 text-green-800 p-2 rounded text-sm hover:bg-green-200">
+                    🛍️ Hacer un pedido
+                </button>
+                <button onclick="goToWhatsApp('mas-info')" class="w-full bg-blue-100 text-blue-800 p-2 rounded text-sm hover:bg-blue-200">
+                    💬 Hablar con un asesor
+                </button>
+            `;
+            chatMessages.appendChild(optionsDiv);
+        }
+
+        function goToWhatsApp(tipo) {
+            let mensaje = '';
+            if (tipo === 'pedido') {
+                addMessage('🛍️ Hacer un pedido', true);
+                mensaje = '¡Hola! 👋 Vengo de la página web y quiero hacer un pedido. ¿Me pueden ayudar?';
+            } else {
+                addMessage('💬 Hablar con un asesor', true);
+                mensaje = '¡Hola! 👋 Vengo de la página web y necesito hablar con un asesor para resolver algunas dudas.';
+            }
+            
+            setTimeout(() => {
+                addMessage('Te estoy conectando con WhatsApp... 🚀');
+                setTimeout(() => {
+                    window.open(`https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`, '_blank');
+                    toggleWhatsAppModal();
+                }, 1500);
+            }, 1000);
+        }
+
+        function resetChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="chat-message bot">
+                    ¡Hola! 👋 Soy tu asistente de DoaStore. ¿En qué puedo ayudarte hoy?
+                </div>
+            `;
+            chatStep = 0;
+            userData = {};
+        }
+
+        // Formulario principal
+        document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = this.querySelector('input[type="text"]').value;
+            const telefono = this.querySelector('input[type="tel"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const productos = this.querySelector('textarea').value;
+            const pais = this.querySelector('select').value;
+            
+            const mensaje = `🛍️ *NUEVO PEDIDO INTERNACIONAL*\n\n` +
+                          `👤 *Cliente:* ${nombre}\n` +
+                          `📱 *Teléfono:* ${telefono}\n` +
+                          `📧 *Email:* ${email}\n` +
+                          `🌍 *País:* ${pais}\n\n` +
+                          `🔗 *Productos solicitados:*\n${productos}\n\n` +
+                          `¡Listo para procesar este pedido! 🚀`;
+            
+            const whatsappUrl = `https://wa.me/18687371965?text=${encodeURIComponent(mensaje)}`;
+            
+            alert('¡Perfecto! Te redirigiremos a WhatsApp para completar tu pedido. 🎉');
+            window.open(whatsappUrl, '_blank');
+            this.reset();
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de entrada para elementos
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('whatsappModal');
+            const whatsappButton = document.querySelector('.whatsapp-float');
+            
+            if (whatsappModalOpen && !modal.contains(e.target) && !whatsappButton.contains(e.target)) {
+                toggleWhatsAppModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97a13c1121c367e6',t:'MTc1NzAyODIwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
