@@ -96,8 +96,11 @@
         .whatsapp-modal {
             position: fixed;
             bottom: 120px;
-            right: 40px;
-            width: 350px;
+            right: 20px;
+            left: 20px;
+            width: auto;
+            max-width: 350px;
+            margin: 0 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -106,6 +109,15 @@
             transition: all 0.3s ease;
             max-height: 500px;
             overflow-y: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .whatsapp-modal {
+                right: 40px;
+                left: auto;
+                width: 350px;
+                margin: 0;
+            }
         }
         
         .whatsapp-modal.show {
@@ -268,68 +280,68 @@
         <div class="carousel-container">
             <div class="carousel-track" id="carouselTrack">
                 <!-- Slide 1 -->
-                <div class="carousel-slide bg-gradient-to-r from-blue-600 to-purple-600 h-[500px] md:h-[600px] flex items-center">
+                <div class="carousel-slide bg-gradient-to-r from-blue-600 to-purple-600 h-[400px] md:h-[600px] flex items-center">
                     <div class="container mx-auto px-4">
-                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
                             <div class="text-white">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">¡Compra en el Mundo!</h2>
-                                <p class="text-xl mb-6">SHEIN, TEMU, Amazon y más. Nosotros nos encargamos de todo.</p>
-                                <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'})" class="bg-yellow-400 text-black px-8 py-3 rounded-full font-bold hover:bg-yellow-300 transition-colors pulse-animation">
+                                <h2 class="text-2xl sm:text-3xl md:text-6xl font-bold mb-2 md:mb-4 leading-tight">¡Compra en el Mundo!</h2>
+                                <p class="text-sm sm:text-base md:text-xl mb-4 md:mb-6">SHEIN, TEMU, Amazon y más. Nosotros nos encargamos de todo.</p>
+                                <button onclick="document.getElementById('pedido').scrollIntoView({behavior: 'smooth'})" class="bg-yellow-400 text-black px-4 py-2 md:px-8 md:py-3 rounded-full font-bold hover:bg-yellow-300 transition-colors pulse-animation text-sm md:text-base">
                                     ¡Empezar Ahora!
                                 </button>
                             </div>
                             <div class="text-center floating-animation">
-                                <div class="text-6xl md:text-8xl">🛍️</div>
+                                <div class="text-4xl sm:text-5xl md:text-8xl">🛍️</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Slide 2 -->
-                <div class="carousel-slide bg-gradient-to-r from-green-500 to-teal-600 h-[500px] md:h-[600px] flex items-center">
+                <div class="carousel-slide bg-gradient-to-r from-green-500 to-teal-600 h-[400px] md:h-[600px] flex items-center">
                     <div class="container mx-auto px-4">
-                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
                             <div class="text-white">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">Precios Increíbles</h2>
-                                <p class="text-xl mb-6">Los mejores precios del mercado con envío seguro garantizado.</p>
-                                <div class="flex space-x-4">
-                                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
-                                        <div class="text-2xl font-bold">-50%</div>
-                                        <div class="text-sm">vs. Otros</div>
+                                <h2 class="text-2xl sm:text-3xl md:text-6xl font-bold mb-2 md:mb-4 leading-tight">Precios Increíbles</h2>
+                                <p class="text-sm sm:text-base md:text-xl mb-4 md:mb-6">Los mejores precios del mercado con envío seguro garantizado.</p>
+                                <div class="flex space-x-2 md:space-x-4">
+                                    <div class="bg-white bg-opacity-20 p-2 md:p-4 rounded-lg">
+                                        <div class="text-lg md:text-2xl font-bold">-50%</div>
+                                        <div class="text-xs md:text-sm">vs. Otros</div>
                                     </div>
-                                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
-                                        <div class="text-2xl font-bold">7-15</div>
-                                        <div class="text-sm">Días</div>
+                                    <div class="bg-white bg-opacity-20 p-2 md:p-4 rounded-lg">
+                                        <div class="text-lg md:text-2xl font-bold">7-15</div>
+                                        <div class="text-xs md:text-sm">Días</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-center floating-animation">
-                                <div class="text-6xl md:text-8xl">💰</div>
+                                <div class="text-4xl sm:text-5xl md:text-8xl">💰</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Slide 3 -->
-                <div class="carousel-slide bg-gradient-to-r from-pink-500 to-rose-600 h-[500px] md:h-[600px] flex items-center">
+                <div class="carousel-slide bg-gradient-to-r from-pink-500 to-rose-600 h-[400px] md:h-[600px] flex items-center">
                     <div class="container mx-auto px-4">
-                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
                             <div class="text-white">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">100% Confiable</h2>
-                                <p class="text-xl mb-6">Miles de clientes satisfechos. Tu pedido está en las mejores manos.</p>
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex text-yellow-400">
+                                <h2 class="text-2xl sm:text-3xl md:text-6xl font-bold mb-2 md:mb-4 leading-tight">100% Confiable</h2>
+                                <p class="text-sm sm:text-base md:text-xl mb-4 md:mb-6">Miles de clientes satisfechos. Tu pedido está en las mejores manos.</p>
+                                <div class="flex items-center space-x-1 md:space-x-2 flex-wrap">
+                                    <div class="flex text-yellow-400 text-sm md:text-base">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
                                     </div>
-                                    <span class="text-white font-bold">4.9/5 (2,847 reseñas)</span>
+                                    <span class="text-white font-bold text-xs md:text-base">4.9/5 (2,847 reseñas)</span>
                                 </div>
                             </div>
                             <div class="text-center floating-animation">
-                                <div class="text-6xl md:text-8xl">⭐</div>
+                                <div class="text-4xl sm:text-5xl md:text-8xl">⭐</div>
                             </div>
                         </div>
                     </div>
@@ -1579,5 +1591,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97a16a20a46e5c86',t:'MTc1NzAzMDA5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97a1a09f86704089',t:'MTc1NzAzMjMyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
